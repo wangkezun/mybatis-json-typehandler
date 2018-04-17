@@ -3,6 +3,10 @@ package io.wkz.kotlin.mybatis
 import io.wkz.kotlin.mybatis.dao.ListJsonDao
 import io.wkz.kotlin.mybatis.entity.ListJson
 import io.wkz.kotlin.mybatis.entity.SubObject
+import org.apache.ibatis.io.Resources
+import org.apache.ibatis.jdbc.ScriptRunner
+import org.apache.ibatis.session.SqlSessionFactory
+import org.junit.BeforeClass
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -22,6 +26,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [DataSourceAutoConfiguration::class, MybatisAutoConfiguration::class, MybatisScanConfiguration::class])
 class JsonListTypeHandlerTest {
+
+    @Autowired
+    private lateinit var sqlSession:SqlSessionFactory
+
+    @BeforeClass
+    fun initTable() {
+        val connection = sqlSession.openSession().connection
+        val scriptRunner = ScriptRunner(connection)
+        scriptRunner.runScript(Resources.getResourceAsReader("init_list_json_tbl.sql"))
+        connection.commit()
+
+    }
 
 	@Autowired
 	private lateinit var listJsonDao: ListJsonDao
