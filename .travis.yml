@@ -2,9 +2,10 @@ language: java
 services: mysql
 before_install:
   - mysql -e "create database if not exists test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+script:
+  - ./gradlew check --debug
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
