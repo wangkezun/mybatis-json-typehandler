@@ -1,3 +1,5 @@
+create database if not exists test;
+use test;
 drop table if exists object_json_tbl;
 create table object_json_tbl (
   id     int unsigned primary key unique  auto_increment,
