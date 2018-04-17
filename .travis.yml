@@ -1,7 +1,7 @@
 language: java
 services: mysql
 before_install:
-  - mysql -e 'create database if not exists test;
+  - mysql -e "create database if not exists test;
               use test;
               drop table if exists object_json_tbl;
               create table object_json_tbl (
@@ -14,4 +14,4 @@ before_install:
                 id     int unsigned primary key unique  auto_increment,
                 listJson   varchar(255) not null
               );
-              insert into list_json_tbl (listJson) values (''),('[{"name":"测试","age":13},{"name":"测试2","age":14}]')'
+              insert into list_json_tbl (listJson) values (''),('[{"name":"测试","age":13},{"name":"测试2","age":14}]')"
