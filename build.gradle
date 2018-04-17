@@ -46,9 +46,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 test {
-    useJUnitPlatform{
-        includeEngines 'junit-jupiter'
-    }
+    useJUnitPlatform()
 }
 
 check.dependsOn jacocoTestReport
