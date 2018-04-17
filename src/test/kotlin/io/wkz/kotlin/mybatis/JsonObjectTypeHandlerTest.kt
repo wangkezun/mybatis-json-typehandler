@@ -28,19 +28,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [DataSourceAutoConfiguration::class, MybatisAutoConfiguration::class, MybatisScanConfiguration::class])
 internal class JsonObjectTypeHandlerTest {
-
-	@Autowired
-	private lateinit var sqlSession:SqlSessionFactory
-
-	@BeforeClass
-	fun initTable() {
-		val connection = sqlSession.openSession().connection
-		val scriptRunner = ScriptRunner(connection)
-		scriptRunner.runScript(Resources.getResourceAsReader("init_object_json_tbl.sql"))
-		connection.commit()
-
-	}
-
 	@Autowired
 	private lateinit var objectJsonDao: ObjectJsonDao
 

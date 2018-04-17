@@ -27,18 +27,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @SpringBootTest(classes = [DataSourceAutoConfiguration::class, MybatisAutoConfiguration::class, MybatisScanConfiguration::class])
 class JsonListTypeHandlerTest {
 
-    @Autowired
-    private lateinit var sqlSession:SqlSessionFactory
-
-    @BeforeClass
-    fun initTable() {
-        val connection = sqlSession.openSession().connection
-        val scriptRunner = ScriptRunner(connection)
-        scriptRunner.runScript(Resources.getResourceAsReader("init_list_json_tbl.sql"))
-        connection.commit()
-
-    }
-
 	@Autowired
 	private lateinit var listJsonDao: ListJsonDao
 
