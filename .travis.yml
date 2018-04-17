@@ -16,4 +16,5 @@ before_install:
               );
               insert into list_json_tbl (listJson) values (''),('[{"name":"测试","age":13},{"name":"测试2","age":14}]')"
 after_success:
+  - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
