@@ -15,6 +15,16 @@ before_install:
                 listJson   varchar(255) not null
               );
               insert into list_json_tbl (listJson) values (''),('[{"name":"测试","age":13},{"name":"测试2","age":14}]')"
+script:
+  - ./gradlew check --stacktrace
 after_success:
   - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
