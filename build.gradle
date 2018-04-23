@@ -9,8 +9,8 @@ buildscript {
     }
 }
 
-group 'io.wkz.kotlin'
-version '1.0-SNAPSHOT'
+group = 'io.wkz.kotlin'
+version = '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
@@ -25,21 +25,20 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.5'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.1.1'
-    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.1.1'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.1.RELEASE'
     testCompile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
     testCompile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.2'
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.1.1'
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        html.enabled false
+        xml.enabled = true
+        html.enabled = false
     }
 }
 
 compileKotlin {
-
     kotlinOptions.jvmTarget = "1.8"
 }
 compileTestKotlin {
