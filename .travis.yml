@@ -2,9 +2,9 @@ language: java
 services: mysql
 before_install:
 - openssl aes-256-cbc -K $encrypted_0b8355631cb2_key -iv $encrypted_0b8355631cb2_iv
-  -in secring.gpg.enc -out secring.gpg -d
-- openssl aes-256-cbc -K $encrypted_0b8355631cb2_key -iv $encrypted_0b8355631cb2_iv
   -in gradle.properties.enc -out gradle.properties -d
+- openssl aes-256-cbc -K $encrypted_0b8355631cb2_key -iv $encrypted_0b8355631cb2_iv
+  -in secring.gpg.enc -out secring.gpg -d
 - mysql -e "create database if not exists test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
   use test; drop table if exists list_json_tbl; create table list_json_tbl ( id     int
   unsigned primary key unique  auto_increment, listJson   varchar(255) not null )
