@@ -1,26 +1,25 @@
 language: java
 services: mysql
 before_install:
-  - mysql -e "create database if not exists test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-              use test;
-              drop table if exists list_json_tbl;
-              create table list_json_tbl (
-                id     int unsigned primary key unique  auto_increment,
-                listJson   varchar(255) not null
-              ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
-              insert into list_json_tbl (listJson) values (''),('[{\"name\":\"测试\",\"age\":13},{\"name\":\"测试2\",\"age\":14}]');
-              drop table if exists object_json_tbl;
-              create table object_json_tbl (
-                id     int unsigned primary key unique  auto_increment,
-                objectJson varchar(255) not null
-              ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
-              insert into object_json_tbl (objectJson) values (''),('{\"name\":\"测试\",\"age\":13}');"
+- openssl aes-256-cbc -K $encrypted_0b8355631cb2_key -iv $encrypted_0b8355631cb2_iv
+  -in gradle.properties.enc -out gradle.properties -d
+- openssl aes-256-cbc -K $encrypted_0b8355631cb2_key -iv $encrypted_0b8355631cb2_iv
+  -in secring.gpg.enc -out secring.gpg -d
+- mysql -e "create database if not exists test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  use test; drop table if exists list_json_tbl; create table list_json_tbl ( id     int
+  unsigned primary key unique  auto_increment, listJson   varchar(255) not null )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci; insert into list_json_tbl
+  (listJson) values (''),('[{\"name\":\"测试\",\"age\":13},{\"name\":\"测试2\",\"age\":14}]');
+  drop table if exists object_json_tbl; create table object_json_tbl ( id     int
+  unsigned primary key unique  auto_increment, objectJson varchar(255) not null )
+  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci; insert into object_json_tbl
+  (objectJson) values (''),('{\"name\":\"测试\",\"age\":13}');"
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash)
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
