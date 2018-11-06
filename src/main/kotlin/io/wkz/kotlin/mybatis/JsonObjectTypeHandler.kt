@@ -9,9 +9,12 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 /**
+ * 针对object的typeHandler。
+ *
  * @author wangkezun(wangkezun@gmail.com)
  * *
  * @since 1.0
+ * @param clazz 需要进行转换的java类
  */
 @MappedJdbcTypes(JdbcType.VARCHAR)
 class JsonObjectTypeHandler<Any>(clazz: Class<Any>) : BaseTypeHandler<Any>() {
