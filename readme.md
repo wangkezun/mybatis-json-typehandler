@@ -10,9 +10,23 @@
 调用时仅需要在mapper中配置好即可使用。
 
 ## 依赖
-项目依赖于MyBatis、Jackson。基于Kotlin语言。
+项目依赖于MyBatis、Jackson。基于Kotlin语言。java8+
 
 ## 用法
+1. 引入依赖
+    * maven 
+    ```xml
+    <dependency>
+          <groupId>io.wkz.kotlin</groupId>
+          <artifactId>mybatis-json-typehandler</artifactId>
+          <version>1.0</version>
+        </dependency>
+    ```
+    
+    * gradle
+    ```groovy
+       compile 'io.wkz.kotlin:mybatis-json-typehandler:1.0'
+    ```
 1. 实体类
 
    与正常的实体类没有任何区别
