@@ -19,7 +19,7 @@ buildscript {
 }
 
 group = 'io.wkz.kotlin'
-version = '1.0-SNAPSHOT'
+version = '1.0'
 
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
@@ -34,6 +34,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
     compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.9.7'
@@ -68,38 +69,35 @@ task sourceJar(type: Jar) {
 
 check.dependsOn jacocoTestReport
 
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = javadoc.destinationDir
+    inputs.dir 'src/main/kotlin'
+    cacheRoot = 'default'
+    noStdlibLink = true
+    externalDocumentationLink {
+        // Root URL of the generated documentation to link with. The trailing slash is required!
+        url = new URL("https://kotlinlang.org/api/latest/jvm/stdlib/")
 
-signing {
-    required { gradle.taskGraph.hasTask("publishing") }
-    sign configurations.archives
+        // If package-list file located in non-standard location
+        packageListUrl = new URL("file:///Users/wangkezun/Downloads/package-list")
+    }
 }
-javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.compileClasspath
 
-    options
-            {
-                setMemberLevel JavadocMemberLevel.PUBLIC
-                setAuthor true
-
-                links "https://docs.oracle.com/javase/8/docs/api/"
-            }
-}
-task packageJavadoc(type: Jar) {
-    from javadoc
+task packageJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 publishing {
     publications {
-        mavenCustom(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
-            artifact sourceJar {
-                classifier "sources"
-            }
-            artifact packageJavadoc
+
 
             pom.withXml {
+                asNode().appendNode('name','mybatis-json-typehandler')
+                asNode().appendNode('url','https://github.com/wangkezun/mybatis-json-typehandler')
                 asNode().appendNode('description', 'A Mybatis TypeHandler for json object and json array')
                 asNode().appendNode('scm')
                         .appendNode('url', scm_url).parent()
@@ -119,7 +117,12 @@ publishing {
                 asNode().appendNode('issueManagement')
                         .appendNode('system', 'GitHub Issues').parent()
                         .appendNode('url', issueUrl)
-
+            }
+            artifact sourceJar {
+                classifier "sources"
+            }
+            artifact packageJavadoc {
+                classifier "javadoc"
             }
         }
     }
@@ -137,44 +140,7 @@ publishing {
         }
     }
 }
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment {
-                deployment -> signing.signPom(deployment)
-            }
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-            pom.project {
-                name project.name
-                packaging 'jar'
-                description 'mybatis-json-typehandler'
-                url 'https://github.com/wangkezun/mybatis-json-typehandler'
-                scm {
-                    url 'https://github.com/wangkezun/mybatis-json-typehandler'
-                    connection 'https://github.com/wangkezun/mybatis-json-typehandler.git'
-                    developerConnection 'git@github.com:wangkezun/mybatis-json-typehandler.git'
-                }
-                licenses {
-                    license {
-                        name 'MIT Licence'
-                        url 'https://raw.githubusercontent.com/wangkezun/mybatis-json-typehandler/master/LICENSE'
-                        distribution 'repo'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'wangkezun'
-                        name 'Wang Kezun'
-                        email 'wangkezun@gmail.com'
-                    }
-                }
-            }
-        }
-    }
+signing {
+    required { gradle.taskGraph.hasTask("publishing") }
+    sign publishing.publications.mavenJava
 }
