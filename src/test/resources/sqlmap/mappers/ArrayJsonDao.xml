@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.wkz.kotlin.mybatis.dao.ArrayJsonDao">
+
+    <resultMap id="ArrayJson" type="io.wkz.kotlin.mybatis.entity.ArrayJson">
+        <result column="arrayJson" property="arrayJson" javaType="io.wkz.kotlin.mybatis.entity.SubObject"
+                jdbcType="VARCHAR" typeHandler="io.wkz.kotlin.mybatis.JsonArrayTypeHandler"/>
+    </resultMap>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into array_json_tbl (arrayJson) value
+            (
+                #{arrayJson,javaType=io.wkz.kotlin.mybatis.entity.SubObject,jdbcType=VARCHAR,typeHandler=io.wkz.kotlin.mybatis.JsonArrayTypeHandler})
+    </insert>
+
+    <select id="get" resultMap="ArrayJson">
+        select *
+        from array_json_tbl
+        where id = #{id}
+    </select>
+</mapper>

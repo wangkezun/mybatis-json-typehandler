@@ -1,7 +1,7 @@
 package io.wkz.kotlin.mybatis
 
-import io.wkz.kotlin.mybatis.dao.ListJsonDao
-import io.wkz.kotlin.mybatis.entity.ListJson
+import io.wkz.kotlin.mybatis.dao.ArrayJsonDao
+import io.wkz.kotlin.mybatis.entity.ArrayJson
 import io.wkz.kotlin.mybatis.entity.SubObject
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
@@ -18,34 +18,34 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
  * @author 王可尊
  * @since 1.0
  */
-@DisplayName("Test JsonListTypeHandler")
+@DisplayName("Test JsonArrayTypeHandler")
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [DataSourceAutoConfiguration::class, MybatisAutoConfiguration::class, MybatisScanConfiguration::class])
-class JsonListTypeHandlerTest {
+class JsonArrayTypeHandlerTest {
 
     @Autowired
-    private lateinit var listJsonDao: ListJsonDao
+    private lateinit var arrayJsonDao: ArrayJsonDao
 
     @Test
     fun testInsertJsonListAsVarchar() {
-        val emptyObject = ListJson()
-        listJsonDao.add(emptyObject)
+        val emptyObject = ArrayJson()
+        arrayJsonDao.add(emptyObject)
         assertNotEquals(0, emptyObject.id)
-        val notEmptyObject = ListJson(listJson = listOf(SubObject("新增", 14), SubObject("新增2", 15)))
-        listJsonDao.add(notEmptyObject)
+        val notEmptyObject = ArrayJson(arrayJson = arrayOf(SubObject("新增", 14), SubObject("新增2", 15)))
+        arrayJsonDao.add(notEmptyObject)
         assertNotEquals(0, emptyObject.id)
     }
 
     @Test
     fun testGetJsonListFromVarchar() {
-        val emptyListResult = listJsonDao.get(1)
+        val emptyListResult = arrayJsonDao.get(1)
         assertNotNull(emptyListResult)
         assertEquals(1, emptyListResult.id)
         println(emptyListResult)
-        assertNotNull(emptyListResult.listJson)
-        assertEquals(0, emptyListResult.listJson!!.size)
+        assertNotNull(emptyListResult.arrayJson)
+        assertEquals(0, emptyListResult.arrayJson!!.size)
 
-        val notEmptyListResult = listJsonDao.get(2)
+        val notEmptyListResult = arrayJsonDao.get(2)
         assertNotNull(notEmptyListResult)
         val (id, listJson) = notEmptyListResult
         assertEquals(2, id)

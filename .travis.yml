@@ -5,14 +5,46 @@ before_install:
   -in gradle.tar.enc -out gradle.tar -d
 - tar xvf gradle.tar
 - mysql -e "create database if not exists test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-  use test; drop table if exists list_json_tbl; create table list_json_tbl ( id     int
-  unsigned primary key unique  auto_increment, listJson   varchar(255) not null )
-  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci; insert into list_json_tbl
-  (listJson) values (''),('[{\"name\":\"测试\",\"age\":13},{\"name\":\"测试2\",\"age\":14}]');
-  drop table if exists object_json_tbl; create table object_json_tbl ( id     int
-  unsigned primary key unique  auto_increment, objectJson varchar(255) not null )
-  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci; insert into object_json_tbl
-  (objectJson) values (''),('{\"name\":\"测试\",\"age\":13}');"
+  use test;
+  drop table if exists list_json_tbl;
+  create table list_json_tbl(
+  id       int
+  unsigned primary key unique auto_increment,
+  listJson varchar(255) not null
+  )
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE utf8mb4_general_ci;
+  insert into list_json_tbl
+  (listJson)
+  values (''),
+  ('[{\"name\":\"测试\",\"age\":13},{\"name\":\"测试2\",\"age\":14}]');
+  drop table if exists object_json_tbl;
+  create table object_json_tbl
+  (
+  id         int
+  unsigned primary key unique auto_increment,
+  objectJson varchar(255) not null
+  )
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE utf8mb4_general_ci;
+  insert into object_json_tbl
+  (objectJson)
+  values (''),
+  ('{\"name\":\"测试\",\"age\":13}');
+  drop table if exists array_json_tbl;
+  create table array_json_tbl
+  (
+  id        int unsigned primary key unique auto_increment,
+  arrayJson varchar(255) not null
+  )
+  engine = InnoDB
+  default charset = utf8mb4
+  collate utf8mb4_general_ci;
+  insert into array_json_tbl (arrayJson)
+  values (''),
+  ('[{\"name\":\"测试\",\"age\":13},{\"name\":\"测试2\",\"age\":14}]');"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_cache:
