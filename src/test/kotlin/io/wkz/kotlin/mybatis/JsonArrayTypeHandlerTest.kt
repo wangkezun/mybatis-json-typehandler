@@ -43,7 +43,6 @@ class JsonArrayTypeHandlerTest {
         assertEquals(1, emptyListResult.id)
         println(emptyListResult)
         assertNull(emptyListResult.arrayJson)
-        assertEquals(0, emptyListResult.arrayJson!!.size)
 
         val notEmptyListResult = arrayJsonDao.get(2)
         assertNotNull(notEmptyListResult)
