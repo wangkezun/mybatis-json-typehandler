@@ -19,13 +19,13 @@
     <dependency>
       <groupId>io.wkz.kotlin</groupId>
       <artifactId>mybatis-json-typehandler</artifactId>
-      <version>1.0</version>
+      <version>1.0.1</version>
     </dependency>
     ```
     
     * gradle
     ```groovy
-       compile 'io.wkz.kotlin:mybatis-json-typehandler:1.0'
+       compile 'io.wkz.kotlin:mybatis-json-typehandler:1.0.1'
     ```
 1. 实体类
 
@@ -38,6 +38,8 @@
             private JsonObject targetObject;
             // 数据库中序列化为JSON Array
             private List<JsonObject> targetList;
+           //数据库中序列化为JSON Array
+            private JsonObject[] tartetArray;
         }
         public class JsonObject {
             private String xxx;
@@ -45,7 +47,7 @@
         }
     ```
     ```kotlin
-        data class Data(val id: Int = 0, val targetObject: JsonObject? = null, val targetList:List<JsonObject>? =null)
+        data class Data(val id: Int = 0, val targetObject: JsonObject? = null, val targetList:List<JsonObject>? =null, val targetArray:Array<JsonObject>? = null)
         data class JsonObject(val xxx:String, val yyy:Int)
     ```
 2. mapper
@@ -60,13 +62,17 @@
            <resultMap id="Data" type="Data">
                <result column="targetObject" property="targetObject" javaType="JsonObject"
                        jdbcType="VARCHAR" typeHandler="io.wkz.kotlin.mybatis.JsonObjectTypeHandler"/>
-               <result column="targetList" property="targetObject" javaType="JsonObject"
+               <result column="targetList" property="targetList" javaType="JsonObject"
                        jdbcType="VARCHAR" typeHandler="io.wkz.kotlin.mybatis.JsonListTypeHandler"/>
+               <result column="targetArray" property="targetArray" javaType="JsonObject"
+                       jdbcType="VARCHAR" typeHandler="io.wkz.kotlin.mybatis.JsonArrayTypeHandler"/>
            </resultMap>
            <insert id="add" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
                insert into tbl_name (targetObject,targetList) value
                    (#{targetObject,javaType=JsonObject,jdbcType=VARCHAR,typeHandler=io.wkz.kotlin.mybatis.JsonObjectTypeHandler},
-                   #{targetList,javaType=JsonObject,jdbcType=VARCHAR,typeHandler=io.wkz.kotlin.mybatis.JsonListTypeHandler})
+                   #{targetList,javaType=JsonObject,jdbcType=VARCHAR,typeHandler=io.wkz.kotlin.mybatis.JsonListTypeHandler},
+                   #{targetArray,javaType=JsonObject,jdbcType=VARCHAR,typeHandler=io.wkz.kotlin.mybatis.JsonArrayTypeHandler},
+                )
            </insert>
            <select id="get" resultMap="Data">
                select *

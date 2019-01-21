@@ -19,7 +19,7 @@ buildscript {
 }
 
 group = 'io.wkz.kotlin'
-version = '1.0.1-SNAPSHOT'
+version = '1.0.1'
 
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
@@ -80,7 +80,7 @@ task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
         url = new URL("https://kotlinlang.org/api/latest/jvm/stdlib/")
 
         // If package-list file located in non-standard location
-        packageListUrl = new URL("file:///Users/wangkezun/Downloads/package-list")
+//        packageListUrl = new URL("file:///Users/wangkezun/Downloads/package-list")
     }
 }
 
