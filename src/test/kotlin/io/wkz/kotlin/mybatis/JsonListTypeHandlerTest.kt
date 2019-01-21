@@ -35,7 +35,7 @@ class JsonListTypeHandlerTest {
 		val emptyObject = ListJson()
 		listJsonDao.add(emptyObject)
 		assertNotEquals(0, emptyObject.id)
-		val notEmptyObject = ListJson(listJson = listOf(SubObject("新增", 14), SubObject("新增2", 15)))
+		val notEmptyObject = ListJson(listJson = arrayOf(SubObject("新增", 14), SubObject("新增2", 15)))
 		listJsonDao.add(notEmptyObject)
 		assertNotEquals(0, emptyObject.id)
 	}

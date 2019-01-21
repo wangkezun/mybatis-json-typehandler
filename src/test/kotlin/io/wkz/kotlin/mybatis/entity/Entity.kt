@@ -9,4 +9,4 @@ data class ObjectJson(val id: Int = 0, val objectJson: SubObject? = null)
 
 data class SubObject(val name: String, val age: Int)
 
-data class ListJson(val id: Int = 0, val listJson: List<SubObject>? = null)
+data class ListJson(val id: Int = 0, val listJson: Array<SubObject>? = null)

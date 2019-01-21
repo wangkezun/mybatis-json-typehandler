@@ -17,10 +17,10 @@
     * maven 
     ```xml
     <dependency>
-          <groupId>io.wkz.kotlin</groupId>
-          <artifactId>mybatis-json-typehandler</artifactId>
-          <version>1.0</version>
-        </dependency>
+      <groupId>io.wkz.kotlin</groupId>
+      <artifactId>mybatis-json-typehandler</artifactId>
+      <version>1.0</version>
+    </dependency>
     ```
     
     * gradle
