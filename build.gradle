@@ -21,6 +21,7 @@ plugins {
     id 'maven'
     id 'signing'
     id 'org.jetbrains.dokka' version "0.10.0"
+    id "org.sonarqube" version "3.4.0.2513"
 }
 
 
@@ -138,4 +139,11 @@ publishing {
 signing {
     required { gradle.taskGraph.hasTask("publishing") }
     sign publishing.publications.mavenJava
+}
+sonarqube {
+  properties {
+    property "sonar.projectKey", "wangkezun_mybatis-json-typehandler"
+    property "sonar.organization", "wangkezun"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
