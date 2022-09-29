@@ -130,8 +130,8 @@ publishing {
                 url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
             }
             credentials {
-                username ossrhUsername
-                password ossrhPassword
+                username findProperty("ossrhUsername") ?: System.getenv("OSSRH_USERNAME")
+                password findProperty("ossrhPassword") ?: System.getenv("OSSRH_PASSWORD")
             }
         }
     }
