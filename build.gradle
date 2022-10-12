@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = '1.7.10'
+        kotlin_version = '1.3.50'
         scm_url = 'https://github.com/wangkezun/mybatis-json-typehandler'
         scm_connection = 'scm:git:git@github.com:wangkezun/mybatis-json-typehandler.git'
         scm_developerConnection = 'scm:git:git@github.com:wangkezun/mybatis-json-typehandler.git'
